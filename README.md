@@ -144,6 +144,8 @@ Other than the set of apps described these apps are installed.
 
 IINA is a good media player. It's also set as your default app to open video files.
 
+Obsidian is a good markdown editor. It's also set as your default app to open markdown files.
+
 Brave Browser can replace Google Chrome with built-in ad-blocker.
 
 Zed is a good editor to replace Xcode and TextEdit for previewing files.
@@ -199,6 +201,12 @@ But at least it's unified now, `CMD + Shift + V` works in any app.
 WezTerm is installed and the shortcut `Hyper + K` opens it.
 Its default theme is [flexoki](https://stephango.com/flexoki) and it changes to light/dark mode based on system appearance setting.
 After running any command `CMD + Shift + C` will copy its output to clipboard.
+
+You can set your own theme combination with [WezTerm config](#under-the-hood):
+
+```lua
+require("omacy").set_theme(config, "Catppuccin Latte", "Catppuccin Mocha")
+```
 
 [Fish](https://fishshell.com/) is the default shell because it has way better default functionality than bash and zsh.
 You have hotkeys and autocompletion out of the box.
@@ -297,6 +305,7 @@ Finder
 
 Default apps
 - Makes IINA the default app for video files.
+- Makes Obsidian the default app for markdown files.
 
 ## Under the Hood
 
@@ -313,6 +322,9 @@ Config: `~/.config/fish/conf.d/omacy.fish` and `~/.config/fish/omacy`
 [WezTerm](https://github.com/wezterm/wezterm) is installed as terminal emulator.
 
 Config: `~/.config/wezterm/omacy`
+
+Your customization goes in `wezterm.lua`, which is `~/.config/wezterm/wezterm.lua` or `~/.wezterm.lua` if you have one.
+See the [WezTerm config docs](https://wezterm.org/config/files.html) for what you can set.
 
 [Hammerspoon](https://www.hammerspoon.org/) lets you write Lua code to interact with macOS API.
 

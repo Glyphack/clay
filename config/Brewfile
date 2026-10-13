@@ -10,6 +10,7 @@ cask "zed"
 
 # Apps
 cask "iina"
+cask "obsidian"
 cask "monitorcontrol"
 cask "brave-browser"
 cask "raycast"

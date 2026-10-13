@@ -230,6 +230,10 @@ func macOSSettingGroups() settingGroups {
 						"duti -s com.colliderli.iina .mkv all",
 					},
 				},
+				{
+					option:   option{flag: "macos-obsidian-markdown", title: "Obsidian for markdown", help: "Makes Obsidian the app that opens markdown files."},
+					commands: []string{"duti -s md.obsidian net.daringfireball.markdown all"},
+				},
 			},
 		},
 	}

@@ -48,7 +48,7 @@ type optionGroup struct {
 func newConfig() Config {
 	return Config{
 		install: installChoices{
-			brew: option{flag: "brew", title: "apps", help: "Installs Homebrew and the apps the rest of the setup needs: Brave Browser, Karabiner, Hammerspoon, WezTerm, Raycast, Zed, and IINA. You can later add your app choices there too."},
+			brew: option{flag: "brew", title: "apps", help: "Installs Homebrew and the apps the rest of the setup needs: Brave Browser, Karabiner, Hammerspoon, WezTerm, Raycast, Zed, IINA, and Obsidian. You can later add your app choices there too."},
 			mise: option{flag: "mise", title: "developer tools", help: "Installs developer tools like fzf, ripgrep and Go with mise. You can later add your own tools too."},
 		},
 		configure: configureChoices{
