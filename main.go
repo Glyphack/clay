@@ -16,6 +16,8 @@ import (
 	"time"
 
 	"github.com/charmbracelet/log"
+	"github.com/cirruslabs/echelon"
+	"github.com/cirruslabs/echelon/renderers"
 )
 
 var HomeDir string
@@ -26,36 +28,22 @@ var Verbose bool
 
 var LogFile *os.File
 
-// Block lettering in the Delta Corps Priest 1 style used by Omarchy.
-const installBanner = `
- ▄██████▄     ▄▄▄▄███▄▄▄▄       ▄████████  ▄████████ ▄██   ▄
-███    ███  ▄██▀▀▀███▀▀▀██▄   ███    ███ ███    ███ ███   ██▄
-███    ███  ███   ███   ███    ███    ███ ███    █▀  ███▄▄▄███
-███    ███  ███   ███   ███    ███    ███ ███        ▀▀▀▀▀▀███
-███    ███  ███   ███   ███  ▀███████████ ███        ▄██   ███
-███    ███  ███   ███   ███    ███    ███ ███    █▄  ███   ███
-███    ███  ███   ███   ███    ███    ███ ███    ███ ███   ███
- ▀██████▀    ▀█   ███   █▀     ███    █▀  ████████▀   ▀█████▀
-
-`
-
 func runStep(ctx context.Context, title string, action func(context.Context) error) error {
+	slog.Info(title)
 	if Verbose {
-		slog.Info(title)
 		return action(ctx)
 	}
-	progress := newInstallProgress(0)
-	progress.update(0, title)
+
+	renderer := renderers.NewInteractiveRenderer(os.Stdout, nil)
+	go renderer.StartDrawing()
+	root := echelon.NewLogger(echelon.InfoLevel, renderer)
+	step := root.Scoped(title)
+
 	err := action(ctx)
-	if err == nil {
-		progress.update(0, strings.Replace(title, "Installing ", "Installed ", 1))
-	} else {
-		progress.update(0, "Failed: "+title)
-	}
-	progress.mu.Lock()
-	progress.finished = true
-	progress.mu.Unlock()
-	progress.stop()
+
+	step.Finish(err == nil)
+	root.Finish(err == nil)
+	renderer.StopDrawing()
 	return err
 }
 
@@ -222,9 +210,7 @@ func install(ctx context.Context, config Config) {
 			fail("Could not become sudo user.", err)
 		}
 
-		if err := installBundle(ctx); err != nil {
-			fail("Installing applications failed", err)
-		}
+		mustRunStep(ctx, "Installing applications", installBundle)
 	}
 	if config.install.mise.on {
 		mustRunStep(ctx, "Mise Configure & Install", setupMise)

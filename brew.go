@@ -81,31 +81,20 @@ func brewBundle(ctx context.Context, args ...string) *exec.Cmd {
 }
 
 func installBundle(ctx context.Context) error {
-	apps := bundleApplications(BrewFile)
-	progress := newInstallProgress(len(apps))
-	defer progress.stop()
-	for i, app := range apps {
-		progress.update(i, "Installing "+app.name)
-		install := brewBundle(ctx, "install", "--file=-", "--no-upgrade", "--force")
-		install.Stdin = strings.NewReader(app.entry + "\n")
-		out, err := run(install)
-		slog.Debug("brew bundle install", "app", app.name, "stdout", out)
-		if err != nil {
-			progress.update(i, "Failed: "+app.name)
-			return err
-		}
-		progress.update(i+1, app.name+" ready")
-	}
-
-	progress.update(len(apps), "Saving Brewfile")
-	dump := append([]string{"dump", "--file=" + getBrewBundleFile(), "--force"}, skipOtherManagers...)
-	out, err := run(brewBundle(ctx, dump...))
+	install := brewBundle(ctx, "install", "--file=-", "--no-upgrade", "--force")
+	install.Stdin = strings.NewReader(BrewFile)
+	out, err := run(install)
 	if err != nil {
-		progress.update(len(apps), "Failed to save Brewfile")
+		return err
+	}
+	slog.Debug("brew bundle install", "stdout", out)
+
+	dump := append([]string{"dump", "--file=" + getBrewBundleFile(), "--force"}, skipOtherManagers...)
+	out, err = run(brewBundle(ctx, dump...))
+	if err != nil {
 		return err
 	}
 	slog.Debug("brew bundle dump", "stdout", out)
-	progress.update(len(apps), "Applications ready")
 	return nil
 }
 
