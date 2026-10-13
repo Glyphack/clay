@@ -1,5 +1,5 @@
 var rule = {
-  description: 'omacy: cmd shift v pastes with no formatting',
+  description: 'clay: cmd shift v pastes with no formatting',
   manipulators: [
     {
       type: 'basic',

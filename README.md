@@ -1,11 +1,11 @@
-# Omacy
+# Clay
 
-Omacy is a customizable and extensible setup that turns your Mac into a keyboard driven environment for programming.
+Clay is a customizable and extensible setup that turns your Mac into a keyboard driven environment for programming.
 
 Install:
 
 ```
-curl -fsSL https://raw.githubusercontent.com/Glyphack/omacy/HEAD/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Glyphack/clay/HEAD/install.sh | bash
 ```
 
 It works both on a brand new Mac and if you already have things installed.
@@ -20,7 +20,7 @@ It works both on a brand new Mac and if you already have things installed.
 
 ## Manual
 
-This section explains how to use your computer after installing Omacy.
+This section explains new things you can do with your computer after installation.
 If you'd like to know what is installed and how things are configured read [under the hood](#under-the-hood).
 
 ### Navigation
@@ -52,7 +52,7 @@ If an app has multiple windows pressing repeatedly will cycle through different 
 You can override or add new hotkeys to launch apps[^hammerspoon-config]:
 
 ```lua
-omacy:map(omacy.HYPER, "o", function() omacy.focus.launchOrFocusOrRotate({ app = "md.obsidian" }) end, "Obsidian")
+clay:map(clay.HYPER, "o", function() clay.focus.launchOrFocusOrRotate({ app = "md.obsidian" }) end, "Obsidian")
 ```
 
 The app name is bundle ID of the application.
@@ -69,8 +69,8 @@ For other apps that do not have a hotkey use `Hyper + M` for the window switcher
 You can also launch or jump to a tab[^hammerspoon-config]:
 
 ```lua
-omacy:map(omacy.HYPER, "1", function()
-	omacy.focus.launchOrFocusOrRotate({
+clay:map(clay.HYPER, "1", function()
+	clay.focus.launchOrFocusOrRotate({
 		app = "com.brave.Browser",
 		url = "https://music.youtube.com",
 	})
@@ -119,7 +119,7 @@ You can define a priority list of microphones and speakers and the top available
 So if you connect or disconnect a device only the ones you like stay activated[^hammerspoon-config].
 
 ```lua
-omacy.audio.prefer({
+clay.audio.prefer({
 	output = { "WH-1000XM5", "MacBook Pro Speakers" },
 	input = { "Yeti Stereo Microphone", "MacBook Pro Microphone" },
 })
@@ -133,8 +133,8 @@ Pressing this key combination without selecting any text and it will read the te
 You can customize the translator language and keybinding:
 
 ```lua
-omacy:map(omacy.HYPER, "e", function()
-	omacy.translate:translateSelectionPopup({ from = "en", to = "nl" })
+clay:map(clay.HYPER, "e", function()
+	clay.translate:translateSelectionPopup({ from = "en", to = "nl" })
 end, "translate English to Dutch")
 ```
 
@@ -164,19 +164,19 @@ You can launch and hide apps on start[^hammerspoon-config].
 This was removed from macOS a few years ago but we have it!
 
 ```lua
-omacy.autostart.launch({ "com.brave.Browser", "com.raycast.macos" })
+clay.autostart.launch({ "com.brave.Browser", "com.raycast.macos" })
 ```
 
 #### Installing Apps
 
-Omacy uses [bundle file](https://docs.brew.sh/Brew-Bundle-and-Brewfile) for managing macOS apps.
+Installer uses [bundle file](https://docs.brew.sh/Brew-Bundle-and-Brewfile) for managing macOS apps.
 It's a list of all the apps you want installed on your Mac.
 This allows you to replicate the setup on other machines by copying the file.
 
 To install other apps:
 
 - If temporarily, use `brew install` followed by the app name.
-- If persistent, use `omacy brew edit` and add the app. Then run `omacy brew sync`.
+- If persistent, use `clay brew edit` and add the app. Then run `clay brew sync`.
 
 Syncing always installs all the listed apps and removes the ones that are not listed but installed with brew.
 So this allows you to try apps and remove them later with a sync.
@@ -205,7 +205,7 @@ After running any command `CMD + Shift + C` will copy its output to clipboard.
 You can set your own theme combination with [WezTerm config](#under-the-hood):
 
 ```lua
-require("omacy").set_theme(config, "Catppuccin Latte", "Catppuccin Mocha")
+require("clay").set_theme(config, "Catppuccin Latte", "Catppuccin Mocha")
 ```
 
 [Fish](https://fishshell.com/) is the default shell because it has way better default functionality than bash and zsh.
@@ -248,7 +248,7 @@ These are all installed with mise. You can edit your [config](https://mise.jdx.d
 
 ### Mac Settings
 
-Omacy sets sane defaults in macOS settings app.
+Installer sets sane defaults in macOS settings app.
 
 The full list of these settings is:
 
@@ -309,26 +309,26 @@ Default apps
 
 ## Under the Hood
 
-Running Omacy installs and configures the following apps:
+The installer adds and configures the following apps:
 
 [Homebrew](https://brew.sh/) is installed and more apps are installed with it.
 
-Brew file path: `~/.config/omacy/Brewfile`
+Brew file path: `~/.config/clay/Brewfile`
 
 [Fish](https://fishshell.com/) is installed and chosen as default shell.
 
-Config: `~/.config/fish/conf.d/omacy.fish` and `~/.config/fish/omacy`
+Config: `~/.config/fish/conf.d/clay.fish` and `~/.config/fish/clay`
 
 [WezTerm](https://github.com/wezterm/wezterm) is installed as terminal emulator.
 
-Config: `~/.config/wezterm/omacy`
+Config: `~/.config/wezterm/clay`
 
 Your customization goes in `wezterm.lua`, which is `~/.config/wezterm/wezterm.lua` or `~/.wezterm.lua` if you have one.
 See the [WezTerm config docs](https://wezterm.org/config/files.html) for what you can set.
 
 [Hammerspoon](https://www.hammerspoon.org/) lets you write Lua code to interact with macOS API.
 
-Spoon path: `~/.hammerspoon/Spoons/Omacy.spoon`
+Spoon path: `~/.hammerspoon/Spoons/Clay.spoon`
 
 [Karabiner-Elements](http://karabiner-elements.pqrs.org/) is a keyboard customizer for macOS.
 
@@ -336,15 +336,16 @@ Config is written to your normal configuration.
 
 [Mise](https://mise.jdx.dev/) to install developer tools.
 
-Config: `~/.config/mise/conf.d/omacy.toml`
+Config: `~/.config/mise/conf.d/clay.toml`
 
 [Raycast](https://www.raycast.com/) is installed but not configured.
 
-[^hammerspoon-config]: Put this code in `~/.hammerspoon/init.lua` between the `Omacy load` and `Omacy apply` blocks, then reload Hammerspoon from its menu bar icon.
+[^hammerspoon-config]: Put this code in `~/.hammerspoon/init.lua` between the `Clay load` and `Clay apply` blocks, then reload Hammerspoon from its menu bar icon.
 
 ## Thanks
 
-This setup is configuration of different tools.
-All the tools above deserve credit.
+This setup is configuration of different amazing tools. All of them deserve credit.
 
-Also [Diego Zamboni](https://zzamboni.org/) guides was really helpful for me to get started.
+Also:
+- [Diego Zamboni](https://zzamboni.org/) Hammerspoon guides was really helpful for me to get started.
+- [Tristan Hume](https://thume.ca/2016/07/16/advanced-hackery-with-the-hammerspoon-window-manager/) For showing the crazy things that can be done with Hammerspoon.

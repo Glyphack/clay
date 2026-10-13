@@ -22,7 +22,7 @@ import (
 
 var HomeDir string
 var ConfigDir string
-var OmacyDir string
+var ClayDir string
 
 var Verbose bool
 
@@ -100,9 +100,9 @@ func runOpen(ctx context.Context, args ...string) {
 }
 
 func openLogFile() (*os.File, error) {
-	logsDir := filepath.Join(OmacyDir, "logs")
+	logsDir := filepath.Join(ClayDir, "logs")
 	if err := os.MkdirAll(logsDir, 0o755); err != nil {
-		return nil, fmt.Errorf("create the omacy logs directory %s: %w", logsDir, err)
+		return nil, fmt.Errorf("create the clay logs directory %s: %w", logsDir, err)
 	}
 	return os.Create(filepath.Join(logsDir, time.Now().Format("20060102-150405")+".log"))
 }
@@ -114,7 +114,7 @@ func fail(message string, err error) {
 }
 
 func stopped() {
-	fmt.Fprintln(os.Stderr, "Stopped, run omacy again whenever you want to go on.")
+	fmt.Fprintln(os.Stderr, "Stopped, run clay again whenever you want to go on.")
 	os.Exit(130)
 }
 
@@ -154,7 +154,7 @@ func main() {
 		os.Exit(1)
 	}
 	ConfigDir = filepath.Join(HomeDir, ".config")
-	OmacyDir = filepath.Join(ConfigDir, "omacy")
+	ClayDir = filepath.Join(ConfigDir, "clay")
 
 	LogFile, err = openLogFile()
 	if err != nil {
@@ -175,7 +175,7 @@ func main() {
 
 	if args.command == "brew" {
 		if err := runBrewCommand(ctx, args.brewCommand); err != nil {
-			fail("omacy brew failed", err)
+			fail("clay brew failed", err)
 		}
 		return
 	}

@@ -21,7 +21,7 @@ import (
 var karabinerRuleFiles embed.FS
 
 const (
-	karabinerRuleMarker         = "omacy: "
+	karabinerRuleMarker         = "clay: "
 	karabinerRuleDir            = "config/karabiner"
 	defaultKarabinerProfileName = "Default profile"
 	karabinerCLIName            = "karabiner_cli"
@@ -308,7 +308,7 @@ func (a *karabinerApp) rawProfile(name string) (map[string]any, error) {
 	return nil, fmt.Errorf("karabiner runs profile %q, which is not in %s", name, a.path)
 }
 
-func writtenByOmacy(rule any) bool {
+func writtenByClay(rule any) bool {
 	fields, ok := rule.(map[string]any)
 	if !ok {
 		return false
@@ -317,7 +317,7 @@ func writtenByOmacy(rule any) bool {
 	return ok && strings.HasPrefix(description, karabinerRuleMarker)
 }
 
-func (a *karabinerApp) setOmacyRules(profileName string, omacyRules []KarabinerComplexModificationsRule) error {
+func (a *karabinerApp) setClayRules(profileName string, clayRules []KarabinerComplexModificationsRule) error {
 	profile, err := a.rawProfile(profileName)
 	if err != nil {
 		return err
@@ -331,14 +331,14 @@ func (a *karabinerApp) setOmacyRules(profileName string, omacyRules []KarabinerC
 		return err
 	}
 
-	kept := make([]any, 0, len(rules)+len(omacyRules))
+	kept := make([]any, 0, len(rules)+len(clayRules))
 	for _, rule := range rules {
-		if writtenByOmacy(rule) {
+		if writtenByClay(rule) {
 			continue
 		}
 		kept = append(kept, rule)
 	}
-	for _, rule := range omacyRules {
+	for _, rule := range clayRules {
 		kept = append(kept, rule)
 	}
 
@@ -471,7 +471,7 @@ func setupKarabiner(ctx context.Context) error {
 
 	profileName := app.profileName(ctx)
 	if app.hasConfig() {
-		err = app.setOmacyRules(profileName, rules)
+		err = app.setClayRules(profileName, rules)
 	} else {
 		err = app.createDefaultConfig(profileName, rules)
 	}
@@ -483,7 +483,7 @@ func setupKarabiner(ctx context.Context) error {
 	}
 
 	if err := app.selectProfile(ctx, profileName); err != nil {
-		slog.Warn("Karabiner was not told to run the profile omacy wrote, its shortcuts start working once that profile is picked", "profile", profileName, "err", err)
+		slog.Warn("Karabiner was not told to run the profile clay wrote, its shortcuts start working once that profile is picked", "profile", profileName, "err", err)
 	}
 	return nil
 }

@@ -12,22 +12,22 @@ import (
 	"strings"
 )
 
-//go:embed all:config/fish/omacy
-var fishOmacyLibrary embed.FS
+//go:embed all:config/fish/clay
+var fishClayLibrary embed.FS
 
-//go:embed config/fish/conf.d/omacy.fish
-var fishOmacyLoader []byte
+//go:embed config/fish/conf.d/clay.fish
+var fishClayLoader []byte
 
 func fishConfigDir() string {
 	return filepath.Join(ConfigDir, "fish")
 }
 
-func fishOmacyLibPath() string {
-	return filepath.Join(fishConfigDir(), "omacy")
+func fishClayLibPath() string {
+	return filepath.Join(fishConfigDir(), "clay")
 }
 
-func fishOmacyConfigPath() string {
-	return filepath.Join(fishConfigDir(), "conf.d", "omacy.fish")
+func fishClayConfigPath() string {
+	return filepath.Join(fishConfigDir(), "conf.d", "clay.fish")
 }
 
 func loginShell() (string, error) {
@@ -79,9 +79,9 @@ func setFishAsDefault(ctx context.Context) error {
 }
 
 func setupFish(context.Context) error {
-	if err := copyFS(fishOmacyLibrary, fishOmacyLibPath()); err != nil {
+	if err := copyFS(fishClayLibrary, fishClayLibPath()); err != nil {
 		return err
 	}
 
-	return writeFile(fishOmacyConfigPath(), fishOmacyLoader, 0o644)
+	return writeFile(fishClayConfigPath(), fishClayLoader, 0o644)
 }

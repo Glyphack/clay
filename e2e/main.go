@@ -9,18 +9,18 @@ import (
 
 const usage = `usage: go run ./e2e <command>
 
-  run [-window] [omacy args]  make a fresh VM, start omacy in it and leave the VM running
+  run [-window] [clay args]   make a fresh VM, start clay in it and leave the VM running
   base [-window]              make the VM that run clones from, with only the apps installed
   ssh [command]               open a shell in the VM, or run one command in its login shell
   clean                       delete the VMs made by run and base
 
 -window boots the VM with a visible screen instead of headless, and sends shortcuts like Cmd+Space to the VM.
-To start omacy again in the same VM: go run ./e2e ssh ./omacy
+To start clay again in the same VM: go run ./e2e ssh ./clay
 `
 
 const (
-	devVMName  = "omacy"
-	baseVMName = "omacy-base"
+	devVMName  = "clay"
+	baseVMName = "clay-base"
 )
 
 func main() {
@@ -36,8 +36,8 @@ func main() {
 	var err error
 	switch command {
 	case "run":
-		window, omacyArgs := windowFlag(args)
-		err = run(window, omacyArgs)
+		window, clayArgs := windowFlag(args)
+		err = run(window, clayArgs)
 	case "base":
 		window, _ := windowFlag(args)
 		err = buildBase(window)
@@ -61,7 +61,7 @@ func windowFlag(args []string) (bool, []string) {
 	return false, args
 }
 
-func run(window bool, omacyArgs []string) error {
+func run(window bool, clayArgs []string) error {
 	if err := build(); err != nil {
 		return err
 	}
@@ -76,7 +76,7 @@ func run(window bool, omacyArgs []string) error {
 	if err := vm.configure(); err != nil {
 		return err
 	}
-	return vm.runOmacy(omacyArgs)
+	return vm.runClay(clayArgs)
 }
 
 // buildBase deletes a base that fails half way, so run does not clone it.
@@ -98,7 +98,7 @@ func makeBase(window bool) error {
 	if err := vm.configure(); err != nil {
 		return err
 	}
-	runErr := vm.runOmacy([]string{"--profile=install-apps", "--no-interactive"})
+	runErr := vm.runClay([]string{"--profile=install-apps", "--no-interactive"})
 	if err := tartRun("stop", "--timeout", "120", vm.Name); err != nil {
 		return err
 	}
@@ -138,17 +138,17 @@ func (vm VM) configure() error {
 	return nil
 }
 
-func (vm VM) runOmacy(args []string) error {
-	if err := vm.copy(binary, "omacy"); err != nil {
+func (vm VM) runClay(args []string) error {
+	if err := vm.copy(binary, "clay"); err != nil {
 		return err
 	}
-	if err := vm.shell(append([]string{"./omacy"}, args...)...); err != nil {
-		return fmt.Errorf("run omacy in %s: %w", vm.Name, err)
+	if err := vm.shell(append([]string{"./clay"}, args...)...); err != nil {
+		return fmt.Errorf("run clay in %s: %w", vm.Name, err)
 	}
 	return nil
 }
 
-const binary = "bin/omacy"
+const binary = "bin/clay"
 
 // build expects to run from the repository root.
 func build() error {
@@ -157,7 +157,7 @@ func build() error {
 	cmd.Env = append(os.Environ(), "CGO_ENABLED=0", "GOOS=darwin", "GOARCH=arm64")
 	cmd.Stdout, cmd.Stderr = os.Stdout, os.Stderr
 	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("build omacy: %w", err)
+		return fmt.Errorf("build clay: %w", err)
 	}
 	return nil
 }

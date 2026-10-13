@@ -8,12 +8,12 @@ import (
 	"path/filepath"
 )
 
-//go:embed all:config/wezterm/omacy
-var weztermOmacyModule embed.FS
+//go:embed all:config/wezterm/clay
+var weztermClayModule embed.FS
 
-const weztermLoadLua = `local omacy_config = require("omacy").load()
-if omacy_config then
-	return omacy_config
+const weztermLoadLua = `local clay_config = require("clay").load()
+if clay_config then
+	return clay_config
 end
 `
 
@@ -24,8 +24,8 @@ local config = wezterm.config_builder()
 return config
 `
 
-func weztermOmacyModulePath() string {
-	return filepath.Join(ConfigDir, "wezterm", "omacy")
+func weztermClayModulePath() string {
+	return filepath.Join(ConfigDir, "wezterm", "clay")
 }
 
 // weztermConfigPath returns the config file WezTerm reads. It reads ~/.wezterm.lua before
@@ -67,7 +67,7 @@ func enableWeztermModule() error {
 }
 
 func setupWezterm(context.Context) error {
-	if err := copyFS(weztermOmacyModule, weztermOmacyModulePath()); err != nil {
+	if err := copyFS(weztermClayModule, weztermClayModulePath()); err != nil {
 		return err
 	}
 	return enableWeztermModule()

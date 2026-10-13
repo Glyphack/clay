@@ -1,7 +1,7 @@
 # build output
 bin/
 dist/
-/omacy
+/clay
 /e2e/e2e
 /e2e/manage
 

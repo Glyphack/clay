@@ -63,7 +63,7 @@ func getBrewBundleFile() string {
 	if path := os.Getenv("BREWFILE_PATH"); path != "" {
 		return path
 	}
-	return filepath.Join(OmacyDir, "Brewfile")
+	return filepath.Join(ClayDir, "Brewfile")
 }
 
 func brewBundle(ctx context.Context, args ...string) *exec.Cmd {
@@ -124,7 +124,7 @@ func runBrewCommand(ctx context.Context, name string) error {
 		fmt.Printf("Wrote %s\n", getBrewBundleFile())
 		return nil
 	default:
-		return errors.New("usage: omacy brew edit|sync|dump")
+		return errors.New("usage: clay brew edit|sync|dump")
 	}
 }
 
@@ -136,6 +136,6 @@ func brewEdit() error {
 	if err := runAttached(exec.Command(editor[0], append(editor[1:], getBrewBundleFile())...)); err != nil {
 		return err
 	}
-	fmt.Println("Run omacy brew sync to install and remove packages so they match the file.")
+	fmt.Println("Run clay brew sync to install and remove packages so they match the file.")
 	return nil
 }

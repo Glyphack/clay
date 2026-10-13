@@ -14,21 +14,21 @@ import (
 	"time"
 )
 
-//go:embed all:config/hammerspoon/Spoons/Omacy.spoon
-var hammerspoonOmacySpoon embed.FS
+//go:embed all:config/hammerspoon/Spoons/Clay.spoon
+var hammerspoonClaySpoon embed.FS
 
 const hammerspoonLoadLua = `require("hs.ipc")
-local omacy = nil
-if hs.spoons.isInstalled("Omacy") then
-	hs.loadSpoon("Omacy")
-	omacy = spoon.Omacy
+local clay = nil
+if hs.spoons.isInstalled("Clay") then
+	hs.loadSpoon("Clay")
+	clay = spoon.Clay
 else
-	print("omacy is not installed on this machine, its Hammerspoon shortcuts stay off")
+	print("clay is not installed on this machine, its Hammerspoon shortcuts stay off")
 end
 `
 
-const hammerspoonApplyLua = `if omacy then
-	omacy:start()
+const hammerspoonApplyLua = `if clay then
+	clay:start()
 end
 `
 
@@ -40,8 +40,8 @@ const (
 	hsStartWait   = 30 * time.Second
 	hsPollDelay   = 500 * time.Millisecond
 
-	loadMarker  = "-- Omacy load DO NOT EDIT"
-	applyMarker = "-- Omacy apply DO NOT EDIT"
+	loadMarker  = "-- Clay load DO NOT EDIT"
+	applyMarker = "-- Clay apply DO NOT EDIT"
 )
 
 var hsCLI = filepath.Join(hsAppPath, "Contents", "Frameworks", "hs", "hs")
@@ -74,8 +74,8 @@ func hammerspoonDir() string {
 	return filepath.Join(HomeDir, ".hammerspoon")
 }
 
-func hammerspoonOmacySpoonPath() string {
-	return filepath.Join(hammerspoonDir(), "Spoons", "Omacy.spoon")
+func hammerspoonClaySpoonPath() string {
+	return filepath.Join(hammerspoonDir(), "Spoons", "Clay.spoon")
 }
 
 func hammerspoonInitPath() string {
@@ -198,7 +198,7 @@ func restartHammerspoon(ctx context.Context) error {
 }
 
 func setupHammerspoon(context.Context) error {
-	if err := copyFS(hammerspoonOmacySpoon, hammerspoonOmacySpoonPath()); err != nil {
+	if err := copyFS(hammerspoonClaySpoon, hammerspoonClaySpoonPath()); err != nil {
 		return err
 	}
 	return enableHammerspoonLibrary()

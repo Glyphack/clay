@@ -36,7 +36,7 @@ var sshOptions = []string{
 var sshEnv []string
 
 func writeAskpass() error {
-	askpass := filepath.Join(os.TempDir(), "omacy-e2e-askpass")
+	askpass := filepath.Join(os.TempDir(), "clay-e2e-askpass")
 	if err := os.WriteFile(askpass, []byte("#!/bin/sh\necho "+password+"\n"), 0o700); err != nil {
 		return fmt.Errorf("write the ssh password script: %w", err)
 	}
@@ -50,7 +50,7 @@ func (vm *VM) boot(window bool) error {
 	if window {
 		args = []string{"run", vm.Name, "--capture-system-keys"}
 	}
-	logPath := filepath.Join(os.TempDir(), "omacy-e2e-"+vm.Name+".log")
+	logPath := filepath.Join(os.TempDir(), "clay-e2e-"+vm.Name+".log")
 	logFile, err := os.Create(logPath)
 	if err != nil {
 		return fmt.Errorf("create the tart run log: %w", err)

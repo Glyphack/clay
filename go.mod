@@ -1,4 +1,4 @@
-module glyphack/omacy
+module glyphack/clay
 
 go 1.26.0
 

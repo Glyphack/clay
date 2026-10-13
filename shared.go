@@ -80,7 +80,7 @@ func copyFS(embeddedFS embed.FS, targetDir string) error {
 		}
 		dstPath := filepath.Join(staging, entry.Name())
 		if err := os.WriteFile(dstPath, data, 0o644); err != nil {
-			return fmt.Errorf("failed writing omacy file %s: %v", dstPath, err)
+			return fmt.Errorf("failed writing clay file %s: %v", dstPath, err)
 		}
 		slog.Debug("Created", "file", filepath.Join(targetDir, entry.Name()))
 	}

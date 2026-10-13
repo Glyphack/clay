@@ -168,7 +168,7 @@ func parseArgs(args []string) arguments {
 		names = append(names, p.name)
 	}
 
-	flags := flag.NewFlagSet("omacy", flag.ExitOnError)
+	flags := flag.NewFlagSet("clay", flag.ExitOnError)
 	parsed := newConfig()
 	for _, o := range parsed.options() {
 		flags.BoolVar(&o.on, o.flag, false, o.help)
@@ -211,7 +211,7 @@ func printUsage(flags *flag.FlagSet) {
 	}}}, config.groups()...)
 
 	var usage strings.Builder
-	usage.WriteString("Usage: omacy [flags]\n       omacy brew edit|sync|dump\n\n")
+	usage.WriteString("Usage: clay [flags]\n       clay brew edit|sync|dump\n\n")
 	usage.WriteString("Option flags turn a part of the setup on, like --brew, or off, like --brew=false.\n")
 	for _, group := range groups {
 		fmt.Fprintf(&usage, "\n%s\n", group.name)

@@ -62,7 +62,7 @@ func newFormStyles(dark bool) formStyles {
 
 func runConfigForm(args arguments) Config {
 	if !term.IsTerminal(os.Stdin.Fd()) || !term.IsTerminal(os.Stdout.Fd()) {
-		fmt.Fprintln(os.Stderr, "omacy asks its questions in a terminal. Without one, run it again with --no-interactive.")
+		fmt.Fprintln(os.Stderr, "clay asks its questions in a terminal. Without one, run it again with --no-interactive.")
 		os.Exit(2)
 	}
 

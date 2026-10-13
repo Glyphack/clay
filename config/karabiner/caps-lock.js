@@ -1,5 +1,5 @@
 var rule = {
-  description: 'omacy: Caps lock to escape or hyper',
+  description: 'clay: Caps lock to escape or hyper',
   manipulators: [
     {
       type: 'basic',

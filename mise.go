@@ -15,7 +15,7 @@ import (
 var miseConfig string
 
 func miseConfigPath() string {
-	return filepath.Join(ConfigDir, "mise", "conf.d", "omacy.toml")
+	return filepath.Join(ConfigDir, "mise", "conf.d", "clay.toml")
 }
 
 func setupMise(ctx context.Context) error {
