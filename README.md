@@ -10,6 +10,13 @@ curl -fsSL https://raw.githubusercontent.com/Glyphack/clay/HEAD/install.sh | bas
 
 It works both on a brand new Mac and if you already have things installed.
 
+Demo:
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=MByiA57ExN8">
+    <img src="https://img.youtube.com/vi/MByiA57ExN8/maxresdefault.jpg" width="700" alt="Watch the video">
+  </a>
+</p>
+
 
 ## Features
 
