@@ -204,13 +204,11 @@ func install(ctx context.Context, config Config) {
 
 	if config.install.brew.on {
 		mustRunStep(ctx, "Installing Homebrew", installBrew)
+		mustRunStep(ctx, "Installing applications", installBundle)
 
-		// sudo only asks again when the Homebrew installer made it forget the password.
 		if err := becomeSudo(ctx, "Enter your password again:"); err != nil {
 			fail("Could not become sudo user.", err)
 		}
-
-		mustRunStep(ctx, "Installing applications", installBundle)
 	}
 	if config.install.mise.on {
 		mustRunStep(ctx, "Mise Configure & Install", setupMise)
