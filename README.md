@@ -51,6 +51,7 @@ Let's start with opening apps:
 | --- | --- |
 | `Hyper + J` | Open Brave Browser|
 | `Hyper + K` | Open WezTerm |
+| `Hyper + N` | Open Raycast Notes |
 | `Hyper + M` | Show a list of open windows and focus the selected one |
 
 Pressing the hotkey launches the application or focuses the app if it's already running.
@@ -159,10 +160,11 @@ Zed is a good editor to replace Xcode and TextEdit for previewing files.
 
 Raycast is a very good tool. It can actually replace a lot of custom built functionalities but it does not allow configuration through code. So just installed for app launcher (Spotlight does anything except finding apps) and commands.
 
+[Notes](https://manual.raycast.com/notes) opens with `Hyper + N`.
+
 Suggested hotkeys to set:
 
 - [Clipboard history](https://manual.raycast.com/clipboard-history)
-- [Notes](https://manual.raycast.com/notes)
 - [Commands](https://manual.raycast.com/script-commands)
 
 #### Quiet Start on Login

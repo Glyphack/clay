@@ -86,6 +86,14 @@ local function defaultHotkeys(self)
 				self.focus.launchOrFocusOrRotate({ app = "com.github.wez.wezterm" })
 			end,
 		},
+		{
+			mods = hyper,
+			key = "n",
+			desc = "Raycast notes",
+			fn = function()
+				hs.urlevent.openURL("raycast://extensions/raycast/raycast-notes/raycast-notes")
+			end,
+		},
 		{ mods = hyper, key = "t", desc = "toggle mic mute", fn = self.micMute.toggle },
 		{
 			mods = hyper,
