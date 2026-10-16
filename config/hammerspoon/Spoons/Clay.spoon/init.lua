@@ -59,7 +59,7 @@ local function defaultHotkeys(self)
 			key = "m",
 			desc = "choose window",
 			fn = function()
-				self.windowChooser:show()
+				self.windowChooser:toggle()
 			end,
 		},
 		{
@@ -67,7 +67,7 @@ local function defaultHotkeys(self)
 			key = "b",
 			desc = "choose bookmark",
 			fn = function()
-				self.bookmarkChooser:show()
+				self.bookmarkChooser:toggle()
 			end,
 		},
 		{
@@ -100,7 +100,7 @@ local function defaultHotkeys(self)
 			key = "\\",
 			desc = "translate selection",
 			fn = function()
-				self.translate:translateSelectionPopup()
+				self.translate:toggleSelectionPopup()
 			end,
 		},
 		{ mods = { "ctrl" }, key = "#50", desc = "reload config", fn = hs.reload },

@@ -52,7 +52,7 @@ Let's start with opening apps:
 | `Hyper + J` | Open Brave Browser|
 | `Hyper + K` | Open WezTerm |
 | `Hyper + N` | Open Raycast Notes |
-| `Hyper + M` | Show a list of open windows and focus the selected one |
+| `Hyper + M` | Show a list of open windows and focus the selected one. Press again to close the list |
 
 Pressing the hotkey launches the application or focuses the app if it's already running.
 If an app has multiple windows pressing repeatedly will cycle through different windows of the app.
@@ -72,7 +72,7 @@ For other apps that do not have a hotkey use `Hyper + M` for the window switcher
 
 | Hotkey | Function |
 | --- | --- |
-| `Hyper + B` | Pick a Brave Browser bookmark and open it |
+| `Hyper + B` | Pick a Brave Browser bookmark and open it. Press again to close the list |
 
 You can also launch or jump to a tab[^hammerspoon-config]:
 
@@ -137,12 +137,13 @@ clay.audio.prefer({
 
 There's a builtin translator for text on the screen. You can select any text and press `Hyper + \` and it will be translated.
 Pressing this key combination without selecting any text and it will read the text from clipboard or just waits for you to type in.
+Press it again to close the translation.
 
 You can customize the translator language and keybinding:
 
 ```lua
 clay:map(clay.HYPER, "e", function()
-	clay.translate:translateSelectionPopup({ from = "en", to = "nl" })
+	clay.translate:toggleSelectionPopup({ from = "en", to = "nl" })
 end, "translate English to Dutch")
 ```
 
