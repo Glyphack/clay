@@ -85,6 +85,8 @@ clay:map(clay.HYPER, "1", function()
 end, "YouTube Music")
 ```
 
+This works with Safari (`com.apple.Safari`) and Chromium browsers like Brave (`com.brave.Browser`) and Chrome (`com.google.Chrome`).
+
 ### Windows
 
 You can also resize and move windows with the keyboard.
